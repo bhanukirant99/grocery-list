@@ -1,0 +1,33 @@
+.app {
+    margin: 1rem;
+}
+
+.app__addListItemButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    background-color: lightgreen;
+}
+
+.app__addListItemButton:hover {
+    cursor: pointer;
+}
+
+.app__groceryListItemsControl {
+    display: flex;
+    justify-content: space-around;
+}
+
+.app__groceryListItemsRemove {
+    background-color: red;
+    padding: 0.5rem;
+    border-radius: 1rem;
+    border: 1px solid black;
+}
+
+.app__groceryListItemsRemove:hover {
+    cursor: pointer;
+}
