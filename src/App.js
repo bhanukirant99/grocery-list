@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import GroceryItem from './components/GroceryItem/GroceryItem';
 
 const App = () => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [groceryList, setGroceryList] = useState([{name: "banana", price: "20", isRed: true}]);
+  const [groceryList, setGroceryList] = useState([{name: "banana", price: "20", quantity: 1, isRed: true}]);
   const [name, setName] = useState("");
   const [price, setPrice] = useState("0");
+
+  useEffect(() => {
+
+  }, [groceryList])
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
@@ -26,13 +30,30 @@ const App = () => {
   }
 
   const addItemToList = (event) => {
-    setGroceryList([...groceryList, {
-      name,
-      price,
-      isRed: false
-    }])
+    groceryList.filter( item => {
+      if(item.name === name) {
+        item.quantity += 1;
+      } else {
+          setGroceryList([...groceryList, {
+            name,
+            price,
+            quantity: 1,
+            isRed: false
+          }])
+      }
+    })
     console.log(groceryList)
     event.preventDefault();
+  }
+
+  const changeBackgroundColor = (name) => {
+    console.log(name)
+    groceryList.forEach( item => {
+      if(item.name === name) {
+        item.isRed = !item.isRed;
+      }
+    })
+    console.log(groceryList)
   }
 
   return (
@@ -69,7 +90,7 @@ const App = () => {
           // <li key={item.name}>
           //   {item}
           // </li>
-            <GroceryItem name={ item.name } price={ item.price } isRed = { item.isRed }/>
+            <GroceryItem name={ item.name } price={ item.price } quantity={ item.quantity } isRed = { item.isRed } changeBackgroundColor={ changeBackgroundColor }/>
           ))}
       </div>
     </div>
