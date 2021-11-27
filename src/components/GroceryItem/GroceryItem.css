@@ -1,0 +1,29 @@
+.groceryItem {
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem 1rem 1rem 10%;
+    width: 60%;
+    border-radius: 1rem;
+    box-shadow: -1px 4px 10px -6px rgba(0, 0, 0, 0.5);
+    justify-content: space-around;
+    color: #f2f2f2;
+    font-weight: 700;
+}
+
+.bgBlack {
+    background-color: #999999;
+}
+
+.bgRed {
+    background-color: #ff4d4d;
+}
+
+.groceryItem:hover {
+    cursor: pointer;
+}
+
+.groceryItem__name {
+    font-size: 1.5rem;
+}
