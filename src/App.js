@@ -1,24 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import GroceryItem from './components/GroceryItem/GroceryItem';
 
 const App = () => {
 
   const [isOpen, setIsOpen] = useState(false);
-  const [groceryList, setGroceryList] = useState([{name: "banana", price: "20", quantity: 1, isRed: true}]);
+  const [groceryList, setGroceryList] = useState({});
   const [name, setName] = useState("");
   const [price, setPrice] = useState("0");
-
-  useEffect(() => {
-
-  }, [groceryList])
 
   const togglePopup = () => {
     setIsOpen(!isOpen);
   }
 
   const clearAllItems = () => {
-    setGroceryList([]);
+    setGroceryList({});
   }
 
   const handleInputNameChange = (event) => {
@@ -30,29 +26,25 @@ const App = () => {
   }
 
   const addItemToList = (event) => {
-    groceryList.filter( item => {
-      if(item.name === name) {
-        item.quantity += 1;
-      } else {
-          setGroceryList([...groceryList, {
-            name,
-            price,
-            quantity: 1,
-            isRed: false
-          }])
+    const groceryListClone = {...groceryList};
+    if(groceryListClone[name]) {
+      groceryListClone[name].quantity += 1;
+    } else {
+      groceryListClone[name] = {
+        price,
+        quantity: 1,
+        isBought: false,
       }
-    })
+    }
+    setGroceryList(groceryListClone);
     console.log(groceryList)
     event.preventDefault();
   }
 
   const changeBackgroundColor = (name) => {
-    console.log(name)
-    groceryList.forEach( item => {
-      if(item.name === name) {
-        item.isRed = !item.isRed;
-      }
-    })
+    const groceryListClone = {...groceryList};
+    groceryListClone[name].isBought = !groceryListClone[name].isBought;
+    setGroceryList(groceryListClone)
     console.log(groceryList)
   }
 
@@ -86,11 +78,8 @@ const App = () => {
       }
 
       <div className="app__groceryList">
-        {groceryList.map((item) => (
-          // <li key={item.name}>
-          //   {item}
-          // </li>
-            <GroceryItem name={ item.name } price={ item.price } quantity={ item.quantity } isRed = { item.isRed } changeBackgroundColor={ changeBackgroundColor }/>
+        { Object.entries(groceryList).length > 0 && Object.keys(groceryList).map((key) => (
+            <GroceryItem name={ key } price={ groceryList[key].price } quantity={ groceryList[key].quantity } isBought = { groceryList[key].isBought } changeBackgroundColor={ changeBackgroundColor }/>
           ))}
       </div>
     </div>
